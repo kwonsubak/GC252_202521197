@@ -1,5 +1,5 @@
 class Animal {
-  constructor(x, y, distConstraint, angleConstraint, thickness = [[radians(10), radians(350)], 30],options) {
+  constructor(x, y, distConstraint, angleConstraint, thickness = [30,20],options) {
     this.pos = createVector(x,y);
     this.vel = createVector(0,0)
     this.acc = createVector(0,0);
@@ -175,12 +175,18 @@ class Animal {
   }
 
  wrapCoordinates() {
-    if (this.pos.x > width) this.pos.x = 0;
-    if (this.pos.x < 0) this.pos.x = width;
-    if (this.pos.y > height) this.pos.y = 0;
-    if (this.pos.y < 0) this.pos.y = height;
+  if (this.pos.x > width || this.pos.x < 0) {
+    //속도 반전
+    this.vel.x *= -1;       
+  }
+  if (this.pos.y > height || this.pos.y < 0) {
+    this.vel.y *= -1; 
   }
 
+  //화면 밖으로 못나가도록 고정 constrain(변수, min, max)
+  this.pos.x = constrain(this.pos.x, 0, width);
+  this.pos.y = constrain(this.pos.y, 0, height);
+}
 
   showSpine() {
     this.spine.forEach((aPoint) => {

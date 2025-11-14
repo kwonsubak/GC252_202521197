@@ -25,10 +25,9 @@ function setup() {
   for (let n = 0; n < numPursuers; n++) {
     pursuers.push(new Pursuer(random(width), random(height)));
   }
-  
+
   let thickness = [30, 45, 50, 55, 55, 50, 40, 35, 30, 20, 15];
   let aScale = 0.5;
-  let smallThickness = thickness.map(t => t * aScale);
 
   animal = new Animal(
     width / 2,

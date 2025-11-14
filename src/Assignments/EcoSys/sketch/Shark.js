@@ -69,10 +69,15 @@ class Pursuer {
   }
 
   wrapCoordinates() {
-    if (this.pos.x > width) this.pos.x = 0;
-    if (this.pos.x < 0) this.pos.x = width;
-    if (this.pos.y > height) this.pos.y = 0;
-    if (this.pos.y < 0) this.pos.y = height;
+   if (this.pos.x > width || this.pos.x < 0) {
+    this.vel.x *= -1;       
+  }
+  if (this.pos.y > height || this.pos.y < 0) {
+    this.vel.y *= -1;       
+  }
+
+  this.pos.x = constrain(this.pos.x, 0, width);
+  this.pos.y = constrain(this.pos.y, 0, height);
   }
 
   show() {
@@ -86,21 +91,32 @@ class Pursuer {
 
   noStroke();
 
-  // === 몸통 ===
-  fill(70, 130, 180);
+  //몸통
+  fill("darkred");
   ellipse(0, 0, 120, 45);
 
-  // === 등지느러미 ===
+  //몸통 지느러미
   push();
   translate(0, 0);
   beginShape();
-  vertex(10, -25);
-  vertex(-20, -65);
-  vertex(-40, -25);
+  vertex(10, -15);
+  vertex(-20, -55);
+  vertex(-40, -15);
   endShape(CLOSE);
   pop();
 
-  // === 꼬리지느러미 ===
+  //다리?
+  push();
+  translate(0, 0);
+  beginShape();
+  vertex(-80, 20);
+  vertex(-80, 50);
+    translate(70,0);
+  vertex(-50, 10);
+  endShape(CLOSE);
+  pop();
+
+  //꼬리 지느러미
   push();
   translate(-60, 0);
   beginShape();
@@ -110,7 +126,7 @@ class Pursuer {
   endShape(CLOSE);
   pop();
 
-  // === 눈 ===
+  //눈
   fill(0);
   circle(35, -10, 8);
 
