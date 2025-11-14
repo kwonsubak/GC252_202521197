@@ -76,46 +76,52 @@ class Pursuer {
   }
 
   show() {
-  push();
-  translate(this.pos.x, this.pos.y);
+    push();
+    translate(this.pos.x, this.pos.y);
 
-  // 속도 방향으로 회전
-  if (this.vel.mag() > 0.01) {
+    // 속도 방향으로 회전
     rotate(this.vel.heading());
+
+    noStroke();
+
+    let tailWave = sin(frameCount * 0.3 + this.pos.x * 0.02) * 10;
+
+    let bodyWave = sin(frameCount * 0.1 + this.pos.y * 0.05) * 2;
+
+    // 상어 몸통
+    fill(70, 130, 180);
+    ellipse(0, bodyWave, 120, 45);
+
+    // 등지느러미
+    push();
+    translate(0, bodyWave);
+    rotate(sin(frameCount * 0.1) * 0.1);
+    beginShape();
+    vertex(10, -25);
+    vertex(-20, -65 + bodyWave * 0.5);
+    vertex(-40, -25);
+    endShape(CLOSE);
+    pop();
+
+    // 꼬리지느러미
+    push();
+    translate(-60, bodyWave * 0.7);
+    rotate(radians(tailWave));
+
+    beginShape();
+    vertex(0, 0);
+    vertex(-35, -15 + tailWave * 0.3);
+    vertex(-35, 15 - tailWave * 0.3);
+    endShape(CLOSE);
+
+    pop();
+
+    // 눈
+    fill(0);
+    circle(35, -10 + bodyWave * 0.2, 8);
+
+    pop();
   }
-
-  noStroke();
-
-  // === 몸통 ===
-  fill(70, 130, 180);
-  ellipse(0, 0, 120, 45);
-
-  // === 등지느러미 ===
-  push();
-  translate(0, 0);
-  beginShape();
-  vertex(10, -25);
-  vertex(-20, -65);
-  vertex(-40, -25);
-  endShape(CLOSE);
-  pop();
-
-  // === 꼬리지느러미 ===
-  push();
-  translate(-60, 0);
-  beginShape();
-  vertex(0, 0);
-  vertex(-35, -15);
-  vertex(-35, 15);
-  endShape(CLOSE);
-  pop();
-
-  // === 눈 ===
-  fill(0);
-  circle(35, -10, 8);
-
-  pop();
-}
 
   showTarget() {
     const closest = this.findClosestEvader(evaders);

@@ -1,87 +1,78 @@
-const {
-  Engine,
-  Runner,
-  Composites,
-  MouseConstraint,
-  Mouse,
-  Composite,
-  Bodies,
-} = Matter;
-
-const evaders = [];
-const numEvaders = 5;
-const pursuers = [];
+let animal;
+let mouse;
+let pursuers = [];
+let evaders = [];
 const numPursuers = 2;
 const seed = 0;
-
-// add bodies
-let stack;
-let walls;
-
-//
-const canvasContainer = document.getElementById("canvas-container");
+const showFlags = [
+  false,
+  false,
+  false,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+];
 
 function setup() {
-  for (let n = 0; n < numEvaders; n++) {
-    evaders.push(new Evader(random(width), random(height)));
-  }
+  createCanvas(800, 600);
+
+    randomSeed(seed);
+
   for (let n = 0; n < numPursuers; n++) {
     pursuers.push(new Pursuer(random(width), random(height)));
   }
+  
+  let thickness = [30, 45, 50, 55, 55, 50, 40, 35, 30, 20, 15];
+  let aScale = 0.5;
+  let smallThickness = thickness.map(t => t * aScale);
 
-  const renderer = createCanvas(800, 600);
-  renderer.parent(canvasContainer);
-  // create engine
-  const engine = Engine.create(),
-    world = engine.world;
+  animal = new Animal(
+    width / 2,
+    height / 4,
+    20 * aScale,
+    [radians(170), radians(190)],
+    thickness.map(t => t * aScale)
+  );
 
-  stack = Composites.stack(20, 20, 10, 5, 0, 0, (x, y) => {
-    if (random() < 0.8) {
-      return Bodies.rectangle(x, y, random(25, 50), random(25, 50));
-    } else {
-      return Bodies.rectangle(x, y, random(80, 120), random(25, 30));
-    }
-  });
+  evaders.push(animal);
 
-  Composite.add(world, stack);
-
-  walls = [
-    //bottom
-    Bodies.rectangle(0.5 * width, height, width, 100, { isStatic: true }),
-  ];
-  Composite.add(world, walls);
-
-  // create runner
-  const runner = Runner.create();
-  Runner.run(runner, engine);
+  mouse = createVector(width / 2, height / 4);
 }
 
 function draw() {
   background("skyblue");
-  for (const evader of evaders) {
-    evader.update();
-    evader.evade(pursuers);
-    evader.separate(evaders);
-    evader.wrapCoordinates();
-    evader.show();
-  }
 
   for (const pursuer of pursuers) {
-    pursuer.update();
     pursuer.pursue(evaders);
+    pursuer.update();
     pursuer.separate(pursuers);
     pursuer.wrapCoordinates();
     pursuer.show();
-    pursuer.showTarget();
   }
-  noStroke();
-  //walls의 구성요소는 모두 Body이므로 bodies를 사용할 필요 없음.
-  fill("#cfa75e");
-  walls.forEach((aBody) => {
-    beginShape();
-    aBody.vertices.forEach((aVertex) => {
-      vertex(aVertex.x, aVertex.y);
-    });
-    endShape(CLOSE);
-  });
+
+  if (mouseIsPressed) {
+    mouse.set(mouseX, mouseY);
+  }
+
+  animal.evade(pursuers);
+  animal.wrapCoordinates();
+  animal.update();
+  animal.setHeadPos(animal.pos);
+
+
+  if (showFlags[4]) {
+    animal.showBodyShape();
+    animal.showEyes();
+  }
+}
+
+function keyPressed() {
+  const num = parseInt(key);
+  if (!isNaN(num)) {
+    showFlags[num] = !showFlags[num]; //T->F or F->T
+  }
 }
