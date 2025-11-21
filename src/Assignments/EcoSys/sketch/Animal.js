@@ -1,8 +1,15 @@
 class Animal {
-  constructor(x, y, distConstraint, angleConstraint, thickness = [30,20],options) {
-    this.pos = createVector(x,y);
-    this.vel = createVector(0,0)
-    this.acc = createVector(0,0);
+  constructor(
+    x,
+    y,
+    distConstraint,
+    angleConstraint,
+    thickness = [30, 20],
+    options
+  ) {
+    this.pos = createVector(x, y);
+    this.vel = createVector(0, 0);
+    this.acc = createVector(0, 0);
     this.r = options?.r || 25;
     this.maxSpeed = options?.maxSpeed || 5;
     this.maxForce = options?.maxForce || 0.05;
@@ -36,7 +43,7 @@ class Animal {
     this.bodyPoints = []; //정렬
   }
 
-   findClosestPursuer(pursuers) {
+  findClosestPursuer(pursuers) {
     let closest = null;
     let minDist = Infinity;
     for (const p of pursuers) {
@@ -71,16 +78,16 @@ class Animal {
   setHeadPos(pos) {
     this.head.setPos(pos);
   }
-  
+
   update() {
-   this.vel.add(this.acc);
-   this.vel.limit(this.maxSpeed);
-   this.pos.add(this.vel);
-   this.acc.mult(0);
-  if (this.vel.mag() > 0.01) {
-  this.head.setHeading(this.vel.heading());
-}
-   this.spine.forEach((aPoint, idx) => {
+    this.vel.add(this.acc);
+    this.vel.limit(this.maxSpeed);
+    this.pos.add(this.vel);
+    this.acc.mult(0);
+    if (this.vel.mag() > 0.01) {
+      this.head.setHeading(this.vel.heading());
+    }
+    this.spine.forEach((aPoint, idx) => {
       if (idx > 0) {
         aPoint.constrainedBy(this.spine[idx - 1], false);
       }
@@ -157,7 +164,6 @@ class Animal {
     this.applyForce(steering);
   }
 
-  
   flee(target) {
     const avoided = p5.Vector.sub(target, this.pos);
     avoided.setMag(this.maxSpeed * -1);
@@ -174,19 +180,19 @@ class Animal {
     this.flee(futurePos);
   }
 
- wrapCoordinates() {
-  if (this.pos.x > width || this.pos.x < 0) {
-    //속도 반전
-    this.vel.x *= -1;       
-  }
-  if (this.pos.y > height || this.pos.y < 0) {
-    this.vel.y *= -1; 
-  }
+  wrapCoordinates() {
+    if (this.pos.x > width || this.pos.x < 0) {
+      //속도 반전
+      this.vel.x *= -1;
+    }
+    if (this.pos.y > height || this.pos.y < 0) {
+      this.vel.y *= -1;
+    }
 
-  //화면 밖으로 못나가도록 고정 constrain(변수, min, max)
-  this.pos.x = constrain(this.pos.x, 0, width);
-  this.pos.y = constrain(this.pos.y, 0, height);
-}
+    //화면 밖으로 못나가도록 고정 constrain(변수, min, max)
+    this.pos.x = constrain(this.pos.x, 0, width);
+    this.pos.y = constrain(this.pos.y, 0, height);
+  }
 
   showSpine() {
     this.spine.forEach((aPoint) => {
