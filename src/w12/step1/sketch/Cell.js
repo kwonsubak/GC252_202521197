@@ -25,15 +25,14 @@ class Cell {
   computeNextState() {
     //filter: array 내장함수, filter: return 필수. return 뒤에 T인 것만 필터링함.
     //aNeighbor?.state = aNeighbor가 있으면 state를 뱉어라.
-    const livingCnt = this.neightbors.filter((aNeighbor) => {
+    const livingCnt = this.neighbors.filter((aNeighbor) => {
       return aNeighbor?.state;
     }).length;
     if (livingCnt < 2) {
       this.nextState = false;
     } else if (livingCnt > 3) {
       this.nextState = false;
-    }
-    if (livingCnt === 3) {
+    } else if (livingCnt === 3) {
       this.nextState = true;
     } else {
       this.nextState = this.state;
@@ -41,7 +40,7 @@ class Cell {
   }
 
   updateState() {
-    this.nextState = this.nextState;
+    this.state = this.nextState;
   }
 
   isHovered(mX, mY) {

@@ -13,6 +13,9 @@ let cellSize;
 
 let hoveredCell = null;
 
+let lastTime = 0;
+const interval = 500;
+
 function getIdx(r, c) {
   return r * cellsPerRow + c;
 }
@@ -70,9 +73,13 @@ function draw() {
   cells.forEach((aCell) => {
     aCell.computeNextState();
   });
-  cells.forEach((aCell) => {
-    aCell.updateState();
-  });
+
+  if (millis() - lastTime > interval) {
+    cells.forEach((aCell) => {
+      aCell.updateState();
+    });
+    lastTime = millis();
+  }
 
   cells.forEach((cell) => cell.render(cell === hoveredCell));
 }
