@@ -44,16 +44,6 @@ class Cell {
       return;
     }
 
-    if (neighborStates.includes('R') && this.state === 'S') {
-      this.nextState = 'R';
-    } else if (neighborStates.includes('S') && this.state === 'P') {
-      this.nextState = 'S';
-    } else if (neighborStates.includes('P') && this.state === 'R') {
-      this.nextState = 'P';
-    } else {
-      this.nextState = this.state;
-    }
-
     const win = {
       R: 'S',
       S: 'P',
@@ -65,8 +55,6 @@ class Cell {
     const canEat = neighborStates.includes(iWinAgainst);
 
     if (canEat) {
-      this.nextState = this.state;
-    } else {
       this.nextState = this.state;
     }
 
