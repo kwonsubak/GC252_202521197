@@ -8,7 +8,7 @@ const INITIAL_RATIO = INITIAL_W / INITIAL_H;
 let lastTime = 0;
 const interval = 300;
 
-const cellsPerRow = 60;
+const cellsPerRow = 100;
 //한 줄당 몇개의 셀이 들어가는가?
 let cellsPerColumn;
 const cells = [];
