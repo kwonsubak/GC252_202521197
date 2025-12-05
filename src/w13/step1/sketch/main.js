@@ -17,8 +17,8 @@ function preload() {
   }
 }
 
-function tileIdx(col, row) {
-  return row * tilePerRow + col;
+function tileIdx(col, r) {
+  return r * tilePerRow + col;
 }
 
 function setup() {
@@ -35,20 +35,19 @@ function setup() {
       const x = c * tileSize;
       const y = r * tileSize;
       const randomState = random() < 0.5;
-      const newTile = new Tile(x, y, tileSize, tileSize);
+      const newTile = new Tile(x, y, tileSize, randomState);
       tiles.push(newTile);
     }
   }
 
   tiles.forEach((aTile, idx) => {
-    // %는 나눗셈 한 나머지
     const col = idx % tilePerRow;
     const row = Math.floor(idx / tilePerRow);
 
     const t = row > 0 ? tiles[tileIdx(col, row - 1)] : null;
-    const l = row > 0 ? tiles[tileIdx(col - 1, row)] : null;
-    const b = row > tilePerCol - 1 ? tiles[tileIdx(col, row + 1)] : null;
-    const r = row > tilePerRow - 1 ? tiles[tileIdx(col + 1, row)] : null;
+    const l = col > 0 ? tiles[tileIdx(col - 1, row)] : null;
+    const b = row < tilePerCol - 1 ? tiles[tileIdx(col, row + 1)] : null;
+    const r = col < tilePerRow - 1 ? tiles[tileIdx(col + 1, row)] : null;
 
     aTile.setNeighbors(t, l, b, r);
   });

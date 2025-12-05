@@ -4,6 +4,7 @@ class Tile {
   neighbors = [null, null, null, null]; // t, l, b, r
   state = false;
   tileImgIdx = 0;
+  binaryState = "0000";
 
   constructor(x, y, w, h, state = false) {
     this.pos[0] = x;
@@ -22,10 +23,11 @@ class Tile {
 
   computeStates() {
     let binaryString = "";
-    this.neighbors.forEach((n) => {
-      binaryString += n?.state ? "1" : "0";
+    this.neighbors.forEach((aNeighbor) => {
+      binaryString += aNeighbor?.state ? "1" : "0";
     });
 
+    this.binaryState = binaryString;
     this.tileImgIdx = parseInt(binaryString, 2);
   }
 
@@ -44,12 +46,37 @@ class Tile {
 
   render(tiles) {
     // tiles = 이미지 배열
-    image(
-      tiles[this.tileImgIdx],
-      this.pos[0],
-      this.pos[1],
-      this.size[0],
-      this.size[1]
-    );
+    //객체 구조 분할 할당
+    const [x, y] = this.pos;
+    const [w, h] = this.size;
+    const cx = x + w / 2;
+    const cy = x + h / 2;
+
+    if (this.state) {
+      image(
+        tiles[this.tileImgIdx],
+        this.pos[0],
+        this.pos[1],
+        this.size[0],
+        this.size[1]
+      );
+    }
+
+    push();
+    translate(cx, cy);
+    if (this.state) {
+      fill("white");
+      circle(0, 0, w / 4);
+    }
+    fill("red");
+    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(16);
+    //char=charater의 약자
+    text(this.binaryState.charAt(0), 0, -h / 3);
+    text(this.binaryState.charAt(1), -w / 3, 0);
+    text(this.binaryState.charAt(2), 0, h / 3);
+    text(this.binaryState.charAt(3), w / 3, 0);
+    pop();
   }
 }
