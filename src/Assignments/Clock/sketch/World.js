@@ -23,10 +23,6 @@ class World {
   }
 
   morning() {
-    let cx = width / 2;
-    let cy = height / 2;
-    let r = (width * 1.5) / 2;
-
     //하늘
     push();
     fill("#C2E2FA");
@@ -38,33 +34,39 @@ class World {
     push();
     fill("#A1BC98");
     noStroke();
-    circle(cx, cy + 600, width * 1.8);
+    circle(width / 2, height / 2 + 600, width * 1.8);
     pop();
 
     //태양
     push();
     fill("#FFF2C6");
     noStroke();
-    circle(cx - 150, cy - 200, 70);
+    circle(width / 2 - 150, height / 2 - 200, 70);
     pop();
+  }
 
-    fill(0);
+  timeText() {
+    //시계 숫자
+    push();
+    let groundR = (width * 1.8) / 2;
+    let textR = groundR - 50;
+
+    translate(width / 2, height / 2 + 600);
+    fill("#F8F4EC");
     textAlign(CENTER, CENTER);
-    textSize(24);
-
+    textSize(50);
     for (let i = 1; i <= 12; i++) {
-      let textX = cx + cos(this.angle) * r;
-      let textY = cy + sin(this.angle) * r;
-
-      text(i, textX, textY);
+      push();
+      let rotationAngle = i * 30;
+      rotate(radians(rotationAngle));
+      translate(0, -textR);
+      text(i, 0, 0);
+      pop();
     }
+    pop();
   }
 
   night() {
-    let cx = width / 2;
-    let cy = height / 2;
-    let r = (width * 1.5) / 2;
-
     //하늘
     push();
     fill("#1A2A4F");
@@ -88,5 +90,7 @@ class World {
     } else {
       this.night();
     }
+
+    this.timeText();
   }
 }
