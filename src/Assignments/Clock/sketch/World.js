@@ -8,18 +8,11 @@ class World {
     let s = second();
     let m = minute();
     let h = hour();
-    this.currentTime = h + m / 60 + s / 3600;
+    let fakeTime = (millis() / 1000) * (24 / 72);
+    this.currentTime = fakeTime % 24;
+    // this.currentTime = h + m / 60 + s / 3600;
     // 시간->각도 변환
-    this.angle = map(this.currentTime, 0, 24, 0, 360);
-  }
-
-  timeText() {
-    push();
-    fill(0);
-    textSize(50);
-    textAlign(CENTER, CENTER);
-    text("12", width / 2, height / 2 + 130);
-    pop();
+    this.angle = map(this.currentTime, 0, 24, 0, radians(-360));
   }
 
   morning() {
@@ -45,27 +38,6 @@ class World {
     pop();
   }
 
-  timeText() {
-    //시계 숫자
-    push();
-    let groundR = (width * 1.8) / 2;
-    let textR = groundR - 50;
-
-    translate(width / 2, height / 2 + 600);
-    fill("#F8F4EC");
-    textAlign(CENTER, CENTER);
-    textSize(50);
-    for (let i = 1; i <= 12; i++) {
-      push();
-      let rotationAngle = i * 30;
-      rotate(radians(rotationAngle));
-      translate(0, -textR);
-      text(i, 0, 0);
-      pop();
-    }
-    pop();
-  }
-
   night() {
     //하늘
     push();
@@ -80,12 +52,43 @@ class World {
     noStroke();
     circle(width / 2, height + 210, width * 1.5);
     pop();
+
+    //달
+    push();
+    fill("#FFF2C6");
+    noStroke();
+    circle(width / 2 - 150, height / 2 - 200, 70);
+    pop();
+  }
+
+  timeText() {
+    let groundR = (width * 1.8) / 2;
+    let textR = groundR - 50;
+
+    push();
+    translate(width / 2, height / 2 + 600);
+
+    rotate(this.angle);
+
+    fill("#F8F4EC");
+    textAlign(CENTER, CENTER);
+    textSize(50);
+
+    for (let i = 1; i <= 12; i++) {
+      push();
+      let rotationAngle = i * 30;
+      rotate(radians(rotationAngle));
+      translate(0, -textR);
+      text(i, 0, 0);
+      pop();
+    }
+    pop();
   }
 
   render() {
-    console.log(this.currentTime);
+    this.update();
 
-    if (this.currentTime >= 7 || this.currentTime < 18) {
+    if (this.currentTime >= 6 && this.currentTime < 18) {
       this.morning();
     } else {
       this.night();
