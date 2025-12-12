@@ -2,6 +2,13 @@ class World {
   constructor() {
     this.currentTime = 0;
     this.angle = 0;
+    this.skyColour = null;
+    this.GroundColour = null;
+    this.morningColour = color("#C2E2FA");
+    this.nightColour = color("#1A2A4F");
+    this.morningGroundColour = color("#A1BC98");
+    this.nightGroundColour = color("#427A76");
+    this.change = 0;
   }
 
   update() {
@@ -13,19 +20,34 @@ class World {
     // this.currentTime = h + m / 60 + s / 3600;
     // 시간->각도 변환
     this.angle = map(this.currentTime, 0, 24, 0, radians(-360));
+
+    if (this.currentTime >= 6 && this.currentTime < 18) {
+      this.change = map(this.currentTime, 6, 24, 0, 1);
+    } else {
+      this.change = map(this.currentTime + 24, 18, 30, 0, 1);
+    }
   }
 
   morning() {
     //하늘
     push();
-    fill("#C2E2FA");
-    noStroke();
+    this.skyColour = lerpColor(
+      this.morningColour,
+      this.nightColour,
+      this.change
+    );
+    fill(this.skyColour);
     rect(0, 0, width, height);
     pop();
 
     //땅
     push();
-    fill("#A1BC98");
+    this.GroundColour = lerpColor(
+      this.morningGroundColour,
+      this.nightGroundColour,
+      this.change
+    );
+    fill(this.GroundColour);
     noStroke();
     circle(width / 2, height / 2 + 600, width * 1.8);
     pop();
@@ -41,14 +63,23 @@ class World {
   night() {
     //하늘
     push();
-    fill("#1A2A4F");
-    noStroke();
+    this.skyColour = lerpColor(
+      this.nightColour,
+      this.morningColour,
+      this.change
+    );
+    fill(this.skyColour);
     rect(0, 0, width, height);
     pop();
 
     //땅
     push();
-    fill("#427A76");
+    this.GroundColour = lerpColor(
+      this.nightGroundColour,
+      this.morningGroundColour,
+      this.change
+    );
+    fill(this.GroundColour);
     noStroke();
     circle(width / 2, height + 210, width * 1.5);
     pop();
@@ -61,8 +92,8 @@ class World {
     pop();
   }
 
-  timeText() {
-    let groundR = (width * 1.8) / 2;
+  score() {
+    let groundR = (width * 1.9) / 2;
     let textR = groundR - 50;
 
     push();
@@ -71,15 +102,14 @@ class World {
     rotate(this.angle);
 
     fill("#F8F4EC");
-    textAlign(CENTER, CENTER);
-    textSize(50);
 
     for (let i = 1; i <= 12; i++) {
       push();
       let rotationAngle = i * 30;
       rotate(radians(rotationAngle));
-      translate(0, -textR);
-      text(i, 0, 0);
+      translate(0, groundR);
+      noStroke();
+      circle(i, 0, 30);
       pop();
     }
     pop();
@@ -93,7 +123,6 @@ class World {
     } else {
       this.night();
     }
-
-    this.timeText();
+    this.score();
   }
 }
