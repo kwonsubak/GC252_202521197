@@ -30,8 +30,6 @@ class World {
     this.minuteAngle = map(this.currentMinute, 0, 60, 0, 360);
     this.hourAngle = map(this.currentHour, 0, 24, 0, 360);
 
-    console.log(this.currentHour);
-
     // if (this.hour >= 0 && this.hour <= 24) {
     //   for (let i = 0; i < 12; i++) {
     //     let correction = i * 30;
