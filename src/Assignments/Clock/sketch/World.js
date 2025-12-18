@@ -10,12 +10,9 @@ class World {
     this.eveningColour = color("#f5b97d");
     this.dawnColour = color("#dfa1d4");
 
-    this.morningGroundColour = color("#a4dda4");
-    this.nightGroundColour = color("#a4dda4");
-    this.morningGroundColour2 = color("#87c983");
-    this.nightGroundColour2 = color("#87c983");
-    this.morningGroundColour3 = color("#558e72");
-    this.nightGroundColour3 = color("#558e72");
+    this.GroundColour = color("#a4dda4");
+    this.GroundColour2 = color("#87c983");
+    this.GroundColour3 = color("#558e72");
 
     this.change = 0;
   }
@@ -25,53 +22,38 @@ class World {
     this.minute = minute();
     this.hour = hour();
 
-    this.currentMinute = this.second / 60;
-    this.currentHour = this.second / 3600;
+    this.currentMinute = this.minute + this.second / 60;
+    this.currentHour = this.hour + this.minute / 60 + this.second / 3600;
 
     // 시간->각도 변환
     this.secondAngle = map(this.second, 0, 60, 60, 360);
     this.minuteAngle = map(this.currentMinute, 0, 60, 0, 360);
-    this.hourAngle = map(this.currentHour, 0, 24, 0, -360);
+    this.hourAngle = map(this.currentHour, 0, 24, 0, 360);
 
-    if (this.currentHour >= 0 && this.currentHour < 24) {
-      this.change = map(this.currentHour, 0, 24, 0, 1);
-    } else {
-      this.change = map(this.currentHour + 24, 0, 24, 0, 1);
-    }
+    //   if (this.currentHour >= 0 && this.currentHour < 24) {
+    //     this.change = map(this.currentHour, 0, 24, 0, 1);
+    //   } else {
+    //     this.change = map(this.currentHour + 24, 0, 24, 0, 1);
+    //   }
   }
 
   ground() {
     //땅3
     push();
-    this.GroundColour = lerpColor(
-      this.morningGroundColour3,
-      this.nightGroundColour3,
-      this.change
-    );
-    fill(this.GroundColour);
+    fill(this.GroundColour3);
     noStroke();
     circle(width / 2, height / 2 + 460, width * 1.8);
     pop();
 
     //땅2
     push();
-    this.GroundColour = lerpColor(
-      this.morningGroundColour2,
-      this.nightGroundColour2,
-      this.change
-    );
-    fill(this.GroundColour);
+    fill(this.GroundColour2);
     noStroke();
     circle(width / 2, height / 2 + 580, width * 1.8);
     pop();
 
     //땅1
     push();
-    this.GroundColour = lerpColor(
-      this.morningGroundColour,
-      this.nightGroundColour,
-      this.change
-    );
     fill(this.GroundColour);
     noStroke();
     circle(width / 2, height / 2 + 700, width * 1.8);
@@ -92,7 +74,7 @@ class World {
       rotate(radians(rotationAngle));
       translate(0, -lineR);
       stroke("#F8F4EC");
-      strokeWeight(2);
+      strokeWeight(4);
       line(0, 0, 0, -10);
       pop();
     }
@@ -126,7 +108,7 @@ class World {
   hourArea() {
     push();
     translate(width / 2, height / 2 + 450);
-    rotate(this.hourAngle);
+    rotate(radians(-this.hourAngle + 25));
 
     let groundR = (width * 1.8) / 2;
     let textR = groundR - 50;
@@ -155,6 +137,7 @@ class World {
 
   dawn() {
     push();
+    this.change = map(this.currentHour, 4, 7, 0, 1);
     this.skyColour = lerpColor(
       this.dawnColour,
       this.morningColour,
@@ -168,6 +151,7 @@ class World {
   morning() {
     //하늘
     push();
+    this.change = map(this.currentHour, 7, 17, 0, 1);
     this.skyColour = lerpColor(
       this.morningColour,
       this.nightColour,
@@ -180,6 +164,7 @@ class World {
 
   evening() {
     push();
+    this.change = map(this.currentHour, 17, 19, 0, 1);
     this.skyColour = lerpColor(
       this.eveningColour,
       this.nightColour,
@@ -193,6 +178,11 @@ class World {
   night() {
     //하늘
     push();
+    if (this.currentHour >= 19) {
+      this.change = map(this.currentHour, 19, 24, 0, 0.5);
+    } else {
+      this.change = map(this.currentHour, 0, 4, 0.5, 1);
+    }
     this.skyColour = lerpColor(
       this.nightColour,
       this.morningColour,
