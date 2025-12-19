@@ -61,7 +61,7 @@ function draw() {
 
       if (cloud.x < -cloud.size) {
         cloud.x = width + cloud.size;
-        cloud.y = random(50, 250);
+        cloud.y = random(0, 200);
       }
       image(imgs[10], cloud.x, cloud.y, cloud.size, cloud.size * 0.5);
       image(imgs[9], width / 2, height / 2 - 400, 160, 160);

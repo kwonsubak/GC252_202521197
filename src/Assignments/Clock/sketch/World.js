@@ -115,7 +115,7 @@ class World {
   hourArea() {
     push();
     translate(width / 2, height / 2 + 450);
-    rotate(radians(this.hourAngle) - 30);
+    rotate(radians(-this.hourAngle + 8) - 30);
 
     let groundR = (width * 1.8) / 2;
     let textR = groundR - 50;
