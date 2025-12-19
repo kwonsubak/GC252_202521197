@@ -49,27 +49,27 @@ class World {
     push();
     fill(this.GroundColour3);
     noStroke();
-    circle(width / 2, height / 2 + 460, width * 1.8);
+    circle(width / 2, height / 2 + 550, width * 1.8);
     pop();
 
     //땅2
     push();
     fill(this.GroundColour2);
     noStroke();
-    circle(width / 2, height / 2 + 580, width * 1.8);
+    circle(width / 2, height / 2 + 670, width * 1.8);
     pop();
 
     //땅1
     push();
     fill(this.GroundColour);
     noStroke();
-    circle(width / 2, height / 2 + 700, width * 1.8);
+    circle(width / 2, height / 2 + 800, width * 1.8);
     pop();
   }
 
   secondArea() {
     push();
-    translate(width / 2, height / 2 + 700);
+    translate(width / 2, height / 2 + 800);
     rotate(this.secondAngle - 90);
 
     let groundR = (width * 1.8) / 2;
@@ -90,7 +90,7 @@ class World {
 
   minuteArea() {
     push();
-    translate(width / 2, height / 2 + 600);
+    translate(width / 2, height / 2 + 680);
     rotate(radians(this.minuteAngle));
 
     let groundR = (width * 1.9) / 2;
@@ -114,7 +114,7 @@ class World {
 
   hourArea() {
     push();
-    translate(width / 2, height / 2 + 450);
+    translate(width / 2, height / 2 + 550);
     rotate(radians(-this.hourAngle + 8) - 30);
 
     let groundR = (width * 1.8) / 2;

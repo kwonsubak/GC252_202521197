@@ -105,24 +105,24 @@ function draw() {
   }
 
   if (frameCount % 60 < 30) {
-    image(imgs[0], width / 2 - 80, height / 2 - 260, 130, 130);
-    image(imgs[2], width / 2 - 85, height / 2 - 230);
-    image(imgs[4], width / 2 - 85, height / 2 - 115, 160, 160);
-    image(imgs[7], width / 2 - 135, height / 2 - 75, 250, 250);
+    image(imgs[0], width / 2 - 80, height / 2 - 170, 130, 130);
+    image(imgs[2], width / 2 - 88, height / 2 - 140);
+    image(imgs[4], width / 2 - 85, height / 2 - 25, 160, 160);
+    image(imgs[7], width / 2 - 135, height / 2 + 20, 250, 250);
   } else if (frameCount % 120 < 60) {
-    image(imgs[0], width / 2 - 80, height / 2 - 260, 130, 130);
-    image(imgs[2], width / 2 - 85, height / 2 - 230);
-    image(imgs[5], width / 2 - 85, height / 2 - 115, 160, 160);
-    image(imgs[6], width / 2 - 135, height / 2 - 75, 250, 250);
+    image(imgs[0], width / 2 - 80, height / 2 - 170, 130, 130);
+    image(imgs[2], width / 2 - 88, height / 2 - 140);
+    image(imgs[5], width / 2 - 85, height / 2 - 25, 160, 160);
+    image(imgs[6], width / 2 - 135, height / 2 + 20, 250, 250);
   } else if (frameCount % 360 < 240) {
-    image(imgs[1], width / 2 - 75, height / 2 - 260, 130, 130);
-    image(imgs[3], width / 2 - 85, height / 2 - 230);
-    image(imgs[4], width / 2 - 85, height / 2 - 115, 160, 160);
-    image(imgs[6], width / 2 - 135, height / 2 - 75, 250, 250);
+    image(imgs[1], width / 2 - 75, height / 2 - 170, 130, 130);
+    image(imgs[3], width / 2 - 88, height / 2 - 140);
+    image(imgs[4], width / 2 - 85, height / 2 - 25, 160, 160);
+    image(imgs[6], width / 2 - 135, height / 2 + 20, 250, 250);
   } else {
-    image(imgs[0], width / 2 - 80, height / 2 - 260, 130, 130);
-    image(imgs[2], width / 2 - 85, height / 2 - 230);
-    image(imgs[4], width / 2 - 85, height / 2 - 115, 160, 160);
-    image(imgs[6], width / 2 - 135, height / 2 - 75, 250, 250);
+    image(imgs[0], width / 2 - 80, height / 2 - 170, 130, 130);
+    image(imgs[2], width / 2 - 88, height / 2 - 140);
+    image(imgs[4], width / 2 - 85, height / 2 - 25, 160, 160);
+    image(imgs[6], width / 2 - 135, height / 2 + 20, 250, 250);
   }
 }
