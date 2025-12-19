@@ -20,7 +20,7 @@ class World {
   update() {
     this.second = second();
     this.minute = minute();
-    this.hour = 22;
+    this.hour = hour();
 
     this.currentMinute = this.minute + this.second / 60;
     this.currentHour = this.hour / 24 + this.minute / 60 + this.second / 3600;
