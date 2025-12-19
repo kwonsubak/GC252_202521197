@@ -9,6 +9,7 @@ let starX = 0;
 let starY = 0;
 
 let clouds = [];
+let stars = [];
 
 const starArea = {
   x1: 0,
@@ -30,9 +31,17 @@ function setup() {
   world = new World();
 
   for (let i = 0; i < 5; i++) {
+    stars.push({
+      x: random(0, width),
+      y: random(0, 250),
+      size: random(50, 100),
+    });
+  }
+
+  for (let i = 0; i < 5; i++) {
     clouds.push({
       x: random(0, width),
-      y: random(50, 250),
+      y: random(0, 200),
       speed: random(0.2, 0.6),
       size: random(150, 250),
     });
@@ -62,25 +71,33 @@ function draw() {
     //moon
     push();
     if (showStar) {
-      image(imgs[11], starX, starY, 50, 50);
-      image(imgs[11], starX2, starY2, 50, 50);
-      image(imgs[11], starX3, starY3, 50, 50);
-      image(imgs[11], starX4, starY4, 50, 50);
-      image(imgs[11], starX5, starY5, 50, 50);
+      // image(imgs[11], starX, starY, 50, 50);
+      // image(imgs[11], starX2, starY2, 50, 50);
+      // image(imgs[11], starX3, starY3, 50, 50);
+      // image(imgs[11], starX4, starY4, 50, 50);
+      // image(imgs[11], starX5, starY5, 50, 50);
+      stars.forEach((star) => {
+        image(imgs[11], star.x, star.y, star.size, star.size);
+      });
     }
 
     if (millis() - starTime > starInterval) {
       starTime = millis();
-      starX = random(starArea.x1, starArea.x2);
-      starY = random(starArea.y1, starArea.y2);
-      starX2 = random(starArea.x1, starArea.x2);
-      starY2 = random(starArea.y1, starArea.y2);
-      starX3 = random(starArea.x1, starArea.x2);
-      starY3 = random(starArea.y1, starArea.y2);
-      starX4 = random(starArea.x1, starArea.x2);
-      starY4 = random(starArea.y1, starArea.y2);
-      starX5 = random(starArea.x1, starArea.x2);
-      starY5 = random(starArea.y1, starArea.y2);
+      stars.forEach((star) => {
+        star.x = random(0, width);
+        star.y = random(0, 250);
+        star.size = random(50, 100);
+      });
+      // starX = random(starArea.x1, starArea.x2);
+      // starY = random(starArea.y1, starArea.y2);
+      // starX2 = random(starArea.x1, starArea.x2);
+      // starY2 = random(starArea.y1, starArea.y2);
+      // starX3 = random(starArea.x1, starArea.x2);
+      // starY3 = random(starArea.y1, starArea.y2);
+      // starX4 = random(starArea.x1, starArea.x2);
+      // starY4 = random(starArea.y1, starArea.y2);
+      // starX5 = random(starArea.x1, starArea.x2);
+      // starY5 = random(starArea.y1, starArea.y2);
 
       showStar = !showStar;
     }

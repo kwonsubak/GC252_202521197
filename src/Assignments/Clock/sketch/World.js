@@ -20,7 +20,7 @@ class World {
   update() {
     this.second = second();
     this.minute = minute();
-    this.hour = hour();
+    this.hour = 22;
 
     this.currentMinute = this.minute + this.second / 60;
     this.currentHour = this.hour / 24 + this.minute / 60 + this.second / 3600;
@@ -115,7 +115,7 @@ class World {
   hourArea() {
     push();
     translate(width / 2, height / 2 + 450);
-    rotate(radians(-55 + this.hourAngle));
+    rotate(radians(this.hourAngle) - 30);
 
     let groundR = (width * 1.8) / 2;
     let textR = groundR - 50;
