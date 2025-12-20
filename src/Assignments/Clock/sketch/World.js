@@ -70,7 +70,7 @@ class World {
   secondArea() {
     push();
     translate(width / 2, height / 2 + 800);
-    rotate(this.secondAngle - 90);
+    rotate(radians(-this.second));
 
     let groundR = (width * 1.8) / 2;
     let lineR = groundR - 50;
@@ -115,7 +115,7 @@ class World {
   hourArea() {
     push();
     translate(width / 2, height / 2 + 550);
-    rotate(radians(-this.hourAngle + 8) - 30);
+    rotate(radians(-this.hourAngle));
 
     let groundR = (width * 1.8) / 2;
     let textR = groundR - 50;
